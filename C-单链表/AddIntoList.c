@@ -7,13 +7,12 @@ typedef struct node
 	struct node * next;	
 } Node;
 
-void InitList(Node * head);   //初始化链表
 void PrintList(Node * head);   //输出链表的值
 void AddInList(Node * head,int num);   //向单链表的末尾添加节点
 
 int main()
 {
-	Node * head1 = (Node*)malloc(sizeof(Node));
+	Node * head1 = (Node*)malloc(sizeof(Node));  //初始化链表
 	head1->next = NULL;
 	// Node * head1;
 	// InitList(head1);
@@ -30,13 +29,7 @@ int main()
 	// PrintList(head1);
 	return 0;
 }
-
-void InitList(Node * head)
-{
-	head = (Node*)malloc(sizeof(Node));
-	head->next = NULL;
-}
-
+//输出链表的值
 void PrintList(Node * head)
 {
 	Node * p = head; //使用指针p，指向head的地址，进行操作，也可以直接操作head
@@ -59,7 +52,7 @@ void PrintList(Node * head)
 	}
 	*/
 }
-
+//向单链表的末尾添加节点
 void AddInList(Node * head, int num)
 {
 	Node * pnew = NULL;
