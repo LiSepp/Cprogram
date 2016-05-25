@@ -7,15 +7,14 @@ typedef struct node
 	struct node * next;	
 } Node;
 
+void InitList(Node * head);  // 初始化指针
 void PrintList(Node * head);   //输出链表的值
 void AddInList(Node * head,int num);   //向单链表的末尾添加节点
 
 int main()
 {
-	Node * head1 = (Node*)malloc(sizeof(Node));  //初始化链表
-	head1->next = NULL;
-	// Node * head1;
-	// InitList(head1);
+	Node * head1 = (Node*)malloc(sizeof(Node));  //头指针，并给头指针一个内存
+	InitList(head1);   //初始化头指针
 	int i = 0;
 	int num;
 	while(i++<3)
@@ -23,11 +22,17 @@ int main()
 		printf("Enter an ineteger: ");
 		scanf("%d",&num);
 		AddInList(head1,num);
-		PrintList(head1);
+		PrintList(head1);   //每次执行打印一次
 		printf("\n");
 	}
-	// PrintList(head1);
+	PrintList(head1);    //打印全部
 	return 0;
+}
+//初始化指针
+void InitList(Node * head)
+{
+	head->num = 0;
+	head->next = NULL;
 }
 //输出链表的值
 void PrintList(Node * head)
