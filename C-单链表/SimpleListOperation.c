@@ -7,12 +7,11 @@ typedef struct node
 	struct node * next;	//指向下一个节点
 }Node;
 
-void InitList(Node * head);    //初始化链表
 void ClearList(Node * head);   //清空链表
 void DestroyList(Node * head); //摧毁链表
 void PrintList(Node * head);   //打印链表
 int LengthList(Node * head);   //返回链表的长度
-void AddInList(Node * head,int num);   //在结尾处添加一个节点
+Node * AddInList(Node * head,int num);   //在结尾处添加一个节点,并返回head
 void InsertInList(Node * head, int i,int num);  //在位置i处加入一个节点
 void DeleteList(Node * head);   //删除头结点
 void DeleteFromList(Node * head,int i); // 删除位置i的节点
@@ -23,13 +22,12 @@ int main()
 	int i = 0;
 	int num;
 	int location;
-	Node * head = (Node *)malloc(sizeof(Node)); //给头结点设置内存
-	InitList(head);   //初始化head
+	Node * head = NULL;
 	while(i++<TIMES)
 	{
 		printf("Enter an ineteger: ");
 		scanf("%d",&num);
-		AddInList(head,num);    //尾节点添加
+		head = AddInList(head,num);    //尾节点添加
 	}
 	//打印链表
 	printf("The list is: ");
@@ -45,10 +43,10 @@ int main()
 	PrintList(head);
 	printf("\n");
 	//删除头结点
-	printf("Now we will delete the first node: ");
-	DeleteList(head);
-	PrintList(head);
-	printf("\n");
+	// printf("Now we will delete the first node: ");
+	// DeleteList(head);
+	// PrintList(head);
+	// printf("\n");
 	//删除链表中的一个节点
 	printf("Please enter a location you want to delete: ");
 	scanf("%d",&location);
@@ -63,12 +61,6 @@ int main()
 	DestroyList(head);
 	printf("Bye\n");
 	return 0;
-}
-//初始化链表
-void InitList(Node * head)
-{
-	head->num = 0;  
-	head->next = NULL;      //下一个节点为空
 }
 //清空链表
 void ClearList(Node * head)
@@ -89,12 +81,19 @@ void DestroyList(Node * head)
 //打印链表
 void PrintList(Node * head)
 {
-	if(head == NULL)
-		printf("No data!\n");
-	while(head->next!=NULL)   //可以尝试用head!=NULL,看会输出什么？
+	// if(head == NULL)
+	// 	printf("No data!\n");
+	// while(head!=NULL)   //可以尝试用head!=NULL,看会输出什么？
+	// {
+	// 	printf("%d->", head->num);
+	// 	head=head->next;      
+	// }
+	Node * p;
+	p = head;
+	while(p!=NULL)
 	{
-		head=head->next;      
-		printf("%d->", head->num);
+		printf("%d->", p->num);
+		p=p->next;
 	}
 }
 //返回链表的长度
@@ -102,7 +101,7 @@ int LengthList(Node * head)
 {
 	int len=0;
 	//可以尝试head!=NULL，看会输出什么?
-	while(head->next!=NULL)  //当节点不为空的时候，len自增,
+	while(head!=NULL)  //当节点不为空的时候，len自增,
 	{
 		head= head->next;
 		len++;
@@ -110,11 +109,11 @@ int LengthList(Node * head)
 	return len;
 }
 //在结尾处添加一个节点
-void AddInList(Node * head,int num)
+Node * AddInList(Node * head, int num)
 {
 	Node * pnew = NULL;
 	Node * pq = head;
-	/*if(head == NULL)   //若头结点为空，则数据存入头结点
+	if(head == NULL)   //若头结点为空，则数据存入头结点
 	{
 		head = (Node *)malloc(sizeof(Node));
 		head->num = num;    
@@ -122,19 +121,16 @@ void AddInList(Node * head,int num)
 	}
 	else
 	{
+		while(pq->next != NULL)
+		{
+			pq=pq->next;
+		}
 		pnew = (Node *)malloc(sizeof(Node));
 		pnew->num = num;
 		pnew->next = NULL;
-		pq->next = pnew;
-	}*/
-	while(pq->next != NULL)
-	{
-		pq=pq->next;
+		pq->next =pnew;
 	}
-	pnew = (Node *)malloc(sizeof(Node));
-	pnew->num = num;
-	pnew->next = NULL;
-	pq->next =pnew;
+	return head;
 }
 //在位置i处加入一个节点
 void InsertInList(Node * head,int i,int num)
@@ -149,7 +145,7 @@ void InsertInList(Node * head,int i,int num)
 		Node * temp;  //临时存放节点
 		Node * pq;    //操作head
 		pq = head;
-		while(j!=i)   //进行遍历，找到i位置的节点
+		while(j!=i-1)   //进行遍历，找到i位置的节点
 		{
 			pq=pq->next;
 			j++;
@@ -177,12 +173,14 @@ void DeleteFromList(Node * head,int i)
 	int len = LengthList(head);
 	if(i<1||i>len)
 		printf("Out Of Limit!\n");
+	else if(i == 1)
+		DeleteList(head);
 	else
 	{
 		Node * p;
 		Node * temp;   //临时存放节点
 		p = head;
-		while(j!=i-1)    //进行遍历，找到i位置的节点
+		while(j!=i-2)    //进行遍历，找到i位置的节点
 		{
 			p=p->next;
 			j++;
@@ -202,7 +200,7 @@ int GetInList(Node * head,int i)
 	{
 		Node * p;
 		p = head;
-		while(j!=i)   //进行遍历，找到i位置的节点
+		while(j!=i-1)   //进行遍历，找到i位置的节点
 		{
 			p=p->next;
 			j++;
