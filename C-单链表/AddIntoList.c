@@ -9,6 +9,7 @@ typedef struct node
 
 void PrintList(Node * head);   //输出链表的值
 Node * AddInList(Node * head,int num);   //向单链表的末尾添加节点,并返回head
+int length(Node *head);    //返回链表的长度
 
 int main()
 {
@@ -24,6 +25,8 @@ int main()
 		printf("\n");
 	}
 	PrintList(head);    //打印全部
+	printf("\n");
+	printf("The length of list:%d\n", length(head));
 	printf("\n");
 	return 0;
 }
@@ -71,4 +74,17 @@ Node * AddInList(Node * head, int num)
 		pq->next =pnew;
 	}
 	return head;
+}
+
+int length(Node *head)
+{
+	Node *pq = head;
+	int len=0;
+	while(pq!=NULL)
+	{
+		head = head->next;
+		len++;
+		pq=head;
+	}
+	return len;
 }
