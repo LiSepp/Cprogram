@@ -37,7 +37,7 @@ int main(void)
 	for(count =2;count<=size*size;count++)
 	{
 		row = (i-1<0)?(size-1):(i-1);
-		column = (j-1<0)?(size-1):(i-1);
+		column = (j-1<0)?(size-1):(j-1);
 		if(square[row][column])
 			i = (++i) % size;
 		else
