@@ -16,7 +16,7 @@ tree_pointer create();
 /*中序遍历*/
 void inorder(tree_pointer ptr);
 /*交换头结点的左右叶子*/
-void swap_tree1(tree_pointer ptr);
+tree_pointer swap_tree1(tree_pointer ptr);
 /*交换任意节点的左右子叶*/
 tree_pointer swap_tree2(tree_pointer ptr);
 
@@ -25,8 +25,7 @@ int main(int argc, char const *argv[])
 	ptr = create();
 	inorder(ptr);
 	printf("\n");
-	swap_tree2(ptr);
-	inorder(ptr);
+	inorder(swap_tree2(ptr));
 	return 0;
 }
 /*创建*/
@@ -74,7 +73,7 @@ void inorder(tree_pointer ptr)
 	}
 }
 /*交换头结点左右子叶*/
-void swap_tree1(tree_pointer ptr)
+tree_pointer swap_tree1(tree_pointer ptr)
 {
 	tree_pointer temp;
 	if(ptr)
@@ -83,16 +82,17 @@ void swap_tree1(tree_pointer ptr)
 		ptr->left_child = ptr->right_child;
 		ptr->right_child = temp;
 	}
+	return ptr;
 }
 /*交换所有子叶的左右*/
 tree_pointer swap_tree2(tree_pointer ptr)
 {
-	tree_pointer temp;
+	tree_pointer tree;
 	if(ptr)
 	{
-		temp = ptr->right_child;
-		ptr->left_child = swap_tree2(ptr->right_child);
-		ptr->right_child = temp;
+		tree = ptr->left_child;
+		ptr->left_child = swap_tree1(ptr->right_child);
+		ptr->right_child = swap_tree1(tree);
 	}
 	return ptr;
 }
